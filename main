@@ -21,7 +21,7 @@ local lp = Players.LocalPlayer
 
 --------------------------------------------------------------------------------
 -- SWEEPING GLOW
---------------------------------------------------------------------------------
+
 local function applySweepingGlow(stroke, color, duration, bandWidth, baseTransparency)
     duration = duration or 3.5
     bandWidth = bandWidth or 0.12
@@ -56,7 +56,7 @@ end
 
 --------------------------------------------------------------------------------
 -- GUI SETUP
---------------------------------------------------------------------------------
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AutoBlockGUI"
 screenGui.ResetOnSpawn = false
@@ -245,8 +245,8 @@ ratingStroke.Parent = ratingLabel
 ratingStroke.Thickness = 1.5
 
 --------------------------------------------------------------------------------
--- AUTO SUBMIT SECTION
---------------------------------------------------------------------------------
+-- AUTO SUBMIT
+
 local subTitleLabel = Instance.new("TextLabel")
 subTitleLabel.Size = UDim2.new(1, -65, 0, 22)
 subTitleLabel.Position = UDim2.new(0, 10, 0, 142)
@@ -346,8 +346,8 @@ subKnobCorner.CornerRadius = UDim.new(1, 0)
 subKnobCorner.Parent = subSliderKnob
 
 --------------------------------------------------------------------------------
--- GET BELT BUTTONS (Stacked Vertically & Horizontally Centered)
---------------------------------------------------------------------------------
+-- GET BELTS
+
 local beltBtn1 = Instance.new("TextButton")
 beltBtn1.Name = "GetBelt1Btn"
 beltBtn1.Size = UDim2.new(1, -20, 0, 24)
@@ -399,8 +399,8 @@ beltBtn2.MouseButton1Click:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- DYNAMIC HOVER EFFECTS & ANIMATIONS
---------------------------------------------------------------------------------
+-- HOVER ANIMATIONS
+
 local function applyToggleHover(btn, getStateFunc, greenColor, redColor, greenHover, redHover)
     btn.MouseEnter:Connect(function()
         local isEnabled = getStateFunc()
@@ -458,7 +458,7 @@ applyHoverEffect(beltBtn2, Color3.fromRGB(70, 70, 80), Color3.fromRGB(90, 90, 10
 
 --------------------------------------------------------------------------------
 -- NOTIFICATION
---------------------------------------------------------------------------------
+
 local notifFrame = Instance.new("Frame")
 notifFrame.Name = "NotificationFrame"
 notifFrame.Size = UDim2.new(0, 320, 0, 90)
@@ -521,8 +521,8 @@ local function showNotification()
 end
 
 --------------------------------------------------------------------------------
--- STARTUP ANIMATION (LOADING -> MAIN MORPH)
---------------------------------------------------------------------------------
+-- LOADING
+
 task.spawn(function()
     task.wait(3.5)
     
@@ -546,7 +546,7 @@ end)
 
 --------------------------------------------------------------------------------
 -- ANIMATIONS & KEYBINDS
---------------------------------------------------------------------------------
+
 local function closeMenu()
     TweenService:Create(uiScale, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Scale = 0}):Play()
     task.delay(0.3, function() mainFrame.Visible = false end)
@@ -691,7 +691,7 @@ end)
 
 --------------------------------------------------------------------------------
 -- SLIDERS LOGIC 
---------------------------------------------------------------------------------
+
 local sliderActive = false
 local subSliderActive = false
 local sliderTweenInfo = TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -790,8 +790,8 @@ G.__abCleanup = function()
 end
 
 --------------------------------------------------------------------------------
--- REMOTE DETECTION (TAKEDOWN BLOCKER)
---------------------------------------------------------------------------------
+-- REMOTE DETECTION
+
 local function wf(parent, name)
     local obj = parent:FindFirstChild(name)
     while not obj do
@@ -852,8 +852,8 @@ if canHook and not G.__abHooked then
 end
 
 --------------------------------------------------------------------------------
--- AUTO BLOCK LOGIC (TAKEDOWN)
---------------------------------------------------------------------------------
+-- AUTO BLOCK LOGIC
+
 local KEYS = {Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D,
               Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right}
 
@@ -932,8 +932,8 @@ local function evaluate(src)
 end
 
 --------------------------------------------------------------------------------
--- SUBMISSION AUTO-TRACKER LOGIC
---------------------------------------------------------------------------------
+-- SUBMISSION TRACKER LOGIC
+
 local updateSubRemote = ReplicatedStorage:WaitForChild("Framework"):WaitForChild("RemoteEvents"):FindFirstChild("UpdateSubmissionPosition")
 if not updateSubRemote then
     pcall(function()
@@ -961,7 +961,7 @@ end
 
 --------------------------------------------------------------------------------
 -- CONNECTIONS
---------------------------------------------------------------------------------
+
 conns[#conns+1] = val:GetPropertyChangedSignal("Value"):Connect(function()
     local v = val.Value
     if v > 0 and prevVal == 0 then
