@@ -109,7 +109,7 @@ gearTween:Play()
 -- MAIN FRAME
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainContainer"
-mainFrame.Size = UDim2.new(0, 255, 0, 275)
+mainFrame.Size = UDim2.new(0, 255, 0, 280)
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.4, 77.5) 
 mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
@@ -163,103 +163,10 @@ closeBtn.TextSize = 16
 closeBtn.Font = Enum.Font.Michroma
 closeBtn.Parent = titleBar
 
---------------------------------------------------------------------------------
--- TAB SYSTEM SETUP
---------------------------------------------------------------------------------
-local tabBar = Instance.new("Frame")
-tabBar.Name = "TabBar"
-tabBar.Size = UDim2.new(1, -20, 0, 26)
-tabBar.Position = UDim2.new(0, 10, 0, 38)
-tabBar.BackgroundTransparency = 1
-tabBar.Parent = mainFrame
-
-local mainTabBtn = Instance.new("TextButton")
-mainTabBtn.Name = "MainTabBtn"
-mainTabBtn.Size = UDim2.new(0.48, 0, 1, 0)
-mainTabBtn.BackgroundColor3 = Color3.fromRGB(52, 152, 219)
-mainTabBtn.Text = "Main"
-mainTabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-mainTabBtn.TextSize, mainTabBtn.Font = 12, Enum.Font.GothamBold
-mainTabBtn.Active = true
-mainTabBtn.AutoButtonColor = false
-mainTabBtn.Parent = tabBar
-local mainTabCorner = Instance.new("UICorner") mainTabCorner.CornerRadius = UDim.new(0, 6) mainTabCorner.Parent = mainTabBtn
-
-local miscTabBtn = Instance.new("TextButton")
-miscTabBtn.Name = "MiscTabBtn"
-miscTabBtn.Size = UDim2.new(0.48, 0, 1, 0)
-miscTabBtn.Position = UDim2.new(0.52, 0, 0, 0)
-miscTabBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-miscTabBtn.Text = "Belts"
-miscTabBtn.TextColor3 = Color3.fromRGB(180, 180, 180)
-miscTabBtn.TextSize, miscTabBtn.Font = 12, Enum.Font.GothamBold
-miscTabBtn.Active = true
-miscTabBtn.AutoButtonColor = false
-miscTabBtn.Parent = tabBar
-local miscTabCorner = Instance.new("UICorner") miscTabCorner.CornerRadius = UDim.new(0, 6) miscTabCorner.Parent = miscTabBtn
-
--- Pages Container
-local pagesContainer = Instance.new("Frame")
-pagesContainer.Name = "PagesContainer"
-pagesContainer.Size = UDim2.new(1, -20, 1, -78)
-pagesContainer.Position = UDim2.new(0, 10, 0, 70)
-pagesContainer.BackgroundTransparency = 1
-pagesContainer.Parent = mainFrame
-
--- Main Page Frame
-local mainPage = Instance.new("Frame")
-mainPage.Name = "MainPage"
-mainPage.Size = UDim2.new(1, 0, 1, 0)
-mainPage.BackgroundTransparency = 1
-mainPage.Visible = true
-mainPage.Parent = pagesContainer
-
--- Misc Page Frame
-local miscPage = Instance.new("Frame")
-miscPage.Name = "MiscPage"
-miscPage.Size = UDim2.new(1, 0, 1, 0)
-miscPage.BackgroundTransparency = 1
-miscPage.Visible = false
-miscPage.Parent = pagesContainer
-
--- Tab Switching Logic with State Tracking
-local currentActiveTab = "Main"
-
-local function updateTabs()
-    if currentActiveTab == "Main" then
-        mainPage.Visible = true
-        miscPage.Visible = false
-        mainTabBtn.BackgroundColor3 = Color3.fromRGB(52, 152, 219)
-        mainTabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        miscTabBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-        miscTabBtn.TextColor3 = Color3.fromRGB(180, 180, 180)
-    else
-        mainPage.Visible = false
-        miscPage.Visible = true
-        miscTabBtn.BackgroundColor3 = Color3.fromRGB(52, 152, 219)
-        miscTabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        mainTabBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-        mainTabBtn.TextColor3 = Color3.fromRGB(180, 180, 180)
-    end
-end
-
-mainTabBtn.MouseButton1Click:Connect(function()
-    currentActiveTab = "Main"
-    updateTabs()
-end)
-
-miscTabBtn.MouseButton1Click:Connect(function()
-    currentActiveTab = "Misc"
-    updateTabs()
-end)
-
---------------------------------------------------------------------------------
--- MAIN PAGE CONTENT
---------------------------------------------------------------------------------
 local toggleBtn = Instance.new("TextButton")
 toggleBtn.Name = "ToggleButton"
-toggleBtn.Size = UDim2.new(1, 0, 0, 32)
-toggleBtn.Position = UDim2.new(0, 0, 0, 0)
+toggleBtn.Size = UDim2.new(1, -20, 0, 32)
+toggleBtn.Position = UDim2.new(0, 10, 0, 38)
 toggleBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
 toggleBtn.Text = "ENABLED"
 toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -267,31 +174,37 @@ toggleBtn.TextSize = 12
 toggleBtn.Font = Enum.Font.GothamBold
 toggleBtn.Active = true
 toggleBtn.AutoButtonColor = false
-toggleBtn.Parent = mainPage
-local toggleCorner = Instance.new("UICorner") toggleCorner.CornerRadius = UDim.new(0, 6) toggleCorner.Parent = toggleBtn
+toggleBtn.Parent = mainFrame
+
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(0, 6)
+toggleCorner.Parent = toggleBtn
 
 local delayLabel = Instance.new("TextLabel")
-delayLabel.Size = UDim2.new(1, 0, 0, 20)
-delayLabel.Position = UDim2.new(0, 0, 0, 38)
+delayLabel.Size = UDim2.new(1, -20, 0, 20)
+delayLabel.Position = UDim2.new(0, 10, 0, 78)
 delayLabel.BackgroundTransparency = 1
 delayLabel.Text = string.format("Delay: %.2fs", responseDelay)
 delayLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 delayLabel.TextSize = 12
 delayLabel.Font = Enum.Font.GothamMedium
 delayLabel.TextXAlignment = Enum.TextXAlignment.Left
-delayLabel.Parent = mainPage
+delayLabel.Parent = mainFrame
 
 local sliderTrack = Instance.new("TextButton")
 sliderTrack.Name = "SliderTrack"
-sliderTrack.Size = UDim2.new(1, 0, 0, 12)
-sliderTrack.Position = UDim2.new(0, 0, 0, 60)
+sliderTrack.Size = UDim2.new(1, -20, 0, 12)
+sliderTrack.Position = UDim2.new(0, 10, 0, 100)
 sliderTrack.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 sliderTrack.BorderSizePixel = 0
 sliderTrack.Text = ""
 sliderTrack.Active = true
 sliderTrack.AutoButtonColor = false
-sliderTrack.Parent = mainPage
-local trackCorner = Instance.new("UICorner") trackCorner.CornerRadius = UDim.new(0, 6) trackCorner.Parent = sliderTrack
+sliderTrack.Parent = mainFrame
+
+local trackCorner = Instance.new("UICorner")
+trackCorner.CornerRadius = UDim.new(0, 6)
+trackCorner.Parent = sliderTrack
 
 local sliderFill = Instance.new("Frame")
 sliderFill.Name = "SliderFill"
@@ -299,7 +212,10 @@ sliderFill.Size = UDim2.new(responseDelay / 0.5, 0, 1, 0)
 sliderFill.BackgroundColor3 = Color3.fromRGB(52, 152, 219)
 sliderFill.BorderSizePixel = 0
 sliderFill.Parent = sliderTrack
-local fillCorner = Instance.new("UICorner") fillCorner.CornerRadius = UDim.new(0, 6) fillCorner.Parent = sliderFill
+
+local fillCorner = Instance.new("UICorner")
+fillCorner.CornerRadius = UDim.new(0, 6)
+fillCorner.Parent = sliderFill
 
 local sliderKnob = Instance.new("Frame")
 sliderKnob.Name = "SliderKnob"
@@ -309,30 +225,38 @@ sliderKnob.Position = UDim2.new(responseDelay / 0.5, 0, 0.5, 0)
 sliderKnob.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
 sliderKnob.BorderSizePixel = 0
 sliderKnob.Parent = sliderTrack
-local knobCorner = Instance.new("UICorner") knobCorner.CornerRadius = UDim.new(1, 0) knobCorner.Parent = sliderKnob
+
+local knobCorner = Instance.new("UICorner")
+knobCorner.CornerRadius = UDim.new(1, 0)
+knobCorner.Parent = sliderKnob
 
 local ratingLabel = Instance.new("TextLabel")
 ratingLabel.Name = "RatingLabel"
-ratingLabel.Size = UDim2.new(1, 0, 0, 20)
-ratingLabel.Position = UDim2.new(0, 0, 0, 76)
+ratingLabel.Size = UDim2.new(1, -20, 0, 20)
+ratingLabel.Position = UDim2.new(0, 10, 0, 116)
 ratingLabel.BackgroundTransparency = 1
 ratingLabel.TextSize = 14
 ratingLabel.Font = Enum.Font.BuilderSansExtraBold
 ratingLabel.TextXAlignment = Enum.TextXAlignment.Center
-ratingLabel.Parent = mainPage
-local ratingStroke = Instance.new("UIStroke") ratingStroke.Parent = ratingLabel ratingStroke.Thickness = 1.5
+ratingLabel.Parent = mainFrame
 
--- Auto Submit Section Inside Main Page
+local ratingStroke = Instance.new("UIStroke")
+ratingStroke.Parent = ratingLabel
+ratingStroke.Thickness = 1.5
+
+--------------------------------------------------------------------------------
+-- AUTO SUBMIT SECTION
+--------------------------------------------------------------------------------
 local subTitleLabel = Instance.new("TextLabel")
-subTitleLabel.Size = UDim2.new(1, -55, 0, 22)
-subTitleLabel.Position = UDim2.new(0, 0, 0, 102)
+subTitleLabel.Size = UDim2.new(1, -65, 0, 22)
+subTitleLabel.Position = UDim2.new(0, 10, 0, 142)
 subTitleLabel.BackgroundTransparency = 1
 subTitleLabel.Text = "Auto Submit (BETA)"
 subTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 subTitleLabel.TextSize = 15
 subTitleLabel.Font = Enum.Font.GothamBold
 subTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-subTitleLabel.Parent = mainPage
+subTitleLabel.Parent = mainFrame
 
 local subGradient = Instance.new("UIGradient")
 subGradient.Color = ColorSequence.new({
@@ -344,7 +268,11 @@ subGradient.Parent = subTitleLabel
 
 local function animateSubGradient()
     subGradient.Offset = Vector2.new(-1, 0)
-    local tween = TweenService:Create(subGradient, TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false), { Offset = Vector2.new(1, 0) })
+    local tween = TweenService:Create(
+        subGradient,
+        TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false),
+        { Offset = Vector2.new(1, 0) }
+    )
     tween:Play()
 end
 animateSubGradient()
@@ -352,7 +280,7 @@ animateSubGradient()
 local subToggleBtn = Instance.new("TextButton")
 subToggleBtn.Name = "SubToggleButton"
 subToggleBtn.Size = UDim2.new(0, 48, 0, 22)
-subToggleBtn.Position = UDim2.new(1, -48, 0, 102)
+subToggleBtn.Position = UDim2.new(1, -58, 0, 142)
 subToggleBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
 subToggleBtn.Text = "ON"
 subToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -360,40 +288,49 @@ subToggleBtn.TextSize = 10
 subToggleBtn.Font = Enum.Font.GothamBold
 subToggleBtn.Active = true
 subToggleBtn.AutoButtonColor = false
-subToggleBtn.Parent = mainPage
-local subToggleCorner = Instance.new("UICorner") subToggleCorner.CornerRadius = UDim.new(1, 0) subToggleCorner.Parent = subToggleBtn
+subToggleBtn.Parent = mainFrame
+
+local subToggleCorner = Instance.new("UICorner")
+subToggleCorner.CornerRadius = UDim.new(1, 0)
+subToggleCorner.Parent = subToggleBtn
 
 local subLabel = Instance.new("TextLabel")
-subLabel.Size = UDim2.new(1, 0, 0, 18)
-subLabel.Position = UDim2.new(0, 0, 0, 132)
+subLabel.Size = UDim2.new(1, -20, 0, 18)
+subLabel.Position = UDim2.new(0, 10, 0, 172)
 subLabel.BackgroundTransparency = 1
 subLabel.Text = "Prediction: 0.15 (Default)"
 subLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 subLabel.TextSize = 11
 subLabel.Font = Enum.Font.GothamMedium
 subLabel.TextXAlignment = Enum.TextXAlignment.Left
-subLabel.Parent = mainPage
+subLabel.Parent = mainFrame
 
 local subSliderTrack = Instance.new("TextButton")
 subSliderTrack.Name = "SubSliderTrack"
-subSliderTrack.Size = UDim2.new(1, 0, 0, 10)
-subSliderTrack.Position = UDim2.new(0, 0, 0, 154)
+subSliderTrack.Size = UDim2.new(1, -20, 0, 10)
+subSliderTrack.Position = UDim2.new(0, 10, 0, 194)
 subSliderTrack.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 subSliderTrack.BorderSizePixel = 0
 subSliderTrack.Text = ""
 subSliderTrack.Active = true
 subSliderTrack.AutoButtonColor = false
-subSliderTrack.Parent = mainPage
-local subTrackCorner = Instance.new("UICorner") subTrackCorner.CornerRadius = UDim.new(0, 5) subTrackCorner.Parent = subSliderTrack
+subSliderTrack.Parent = mainFrame
+
+local subTrackCorner = Instance.new("UICorner")
+subTrackCorner.CornerRadius = UDim.new(0, 5)
+subTrackCorner.Parent = subSliderTrack
 
 local subAlphaInit = predictionFactor / 0.5
 local subSliderFill = Instance.new("Frame")
-subSliderFill.Name = "SliderFill"
+subSliderFill.Name = "SubSliderFill"
 subSliderFill.Size = UDim2.new(subAlphaInit, 0, 1, 0)
 subSliderFill.BackgroundColor3 = Color3.fromRGB(255, 140, 90)
 subSliderFill.BorderSizePixel = 0
 subSliderFill.Parent = subSliderTrack
-local subFillCorner = Instance.new("UICorner") subFillCorner.CornerRadius = UDim.new(0, 5) subFillCorner.Parent = subSliderFill
+
+local subFillCorner = Instance.new("UICorner")
+subFillCorner.CornerRadius = UDim.new(0, 5)
+subFillCorner.Parent = subSliderFill
 
 local subSliderKnob = Instance.new("Frame")
 subSliderKnob.Name = "SliderKnob"
@@ -403,71 +340,58 @@ subSliderKnob.Position = UDim2.new(subAlphaInit, 0, 0.5, 0)
 subSliderKnob.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
 subSliderKnob.BorderSizePixel = 0
 subSliderKnob.Parent = subSliderTrack
-local subKnobCorner = Instance.new("UICorner") subKnobCorner.CornerRadius = UDim.new(1, 0) subKnobCorner.Parent = subSliderKnob
+
+local subKnobCorner = Instance.new("UICorner")
+subKnobCorner.CornerRadius = UDim.new(1, 0)
+subKnobCorner.Parent = subSliderKnob
 
 --------------------------------------------------------------------------------
--- MISC PAGE CONTENT (GET BELT BUTTONS)
+-- GET BELT BUTTONS (Stacked Vertically & Horizontally Centered)
 --------------------------------------------------------------------------------
-local champTitle = Instance.new("TextLabel")
-champTitle.Name = "ChampTitle"
-champTitle.Size = UDim2.new(0, 120, 0, 32)
-champTitle.Position = UDim2.new(0, 0, 0, 10)
-champTitle.BackgroundTransparency = 1
-champTitle.Text = "Get champion belt"
-champTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
-champTitle.TextSize = 14
-champTitle.Font = Enum.Font.GothamMedium
-champTitle.TextXAlignment = Enum.TextXAlignment.Left
-champTitle.Parent = miscPage
+local beltBtn1 = Instance.new("TextButton")
+beltBtn1.Name = "GetBelt1Btn"
+beltBtn1.Size = UDim2.new(1, -20, 0, 24)
+beltBtn1.AnchorPoint = Vector2.new(0.5, 0)
+beltBtn1.Position = UDim2.new(0.5, 0, 0, 214)
+beltBtn1.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
+beltBtn1.Text = "Get Belt 1"
+beltBtn1.TextColor3 = Color3.fromRGB(255, 255, 255)
+beltBtn1.TextSize = 12
+beltBtn1.Font = Enum.Font.GothamBold
+beltBtn1.Active = true
+beltBtn1.AutoButtonColor = false
+beltBtn1.Parent = mainFrame
 
-local champBtn = Instance.new("TextButton")
-champBtn.Name = "ChampButton"
-champBtn.Size = UDim2.new(0, 85, 0, 32)
-champBtn.Position = UDim2.new(1, -85, 0, 10)
-champBtn.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
-champBtn.Text = "Get Belt"
-champBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-champBtn.TextSize = 12
-champBtn.Font = Enum.Font.GothamBold
-champBtn.Active = true
-champBtn.AutoButtonColor = false
-champBtn.Parent = miscPage
-local champCorner = Instance.new("UICorner") champCorner.CornerRadius = UDim.new(0, 6) champCorner.Parent = champBtn
+local belt1Corner = Instance.new("UICorner")
+belt1Corner.CornerRadius = UDim.new(0, 6)
+belt1Corner.Parent = beltBtn1
 
-champBtn.MouseButton1Click:Connect(function()
+beltBtn1.MouseButton1Click:Connect(function()
     pcall(function()
         local belt = ReplicatedStorage.Framework.Assets.Belts.Championship:Clone()
         belt.Parent = lp.Backpack
     end)
 end)
 
-local coolerTitle = Instance.new("TextLabel")
-coolerTitle.Name = "CoolerTitle"
-coolerTitle.Size = UDim2.new(0, 120, 0, 32)
-coolerTitle.Position = UDim2.new(0, 0, 0, 52)
-coolerTitle.BackgroundTransparency = 1
-coolerTitle.Text = "Get cooler belt"
-coolerTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
-coolerTitle.TextSize = 14
-coolerTitle.Font = Enum.Font.GothamMedium
-coolerTitle.TextXAlignment = Enum.TextXAlignment.Left
-coolerTitle.Parent = miscPage
+local beltBtn2 = Instance.new("TextButton")
+beltBtn2.Name = "GetBelt2Btn"
+beltBtn2.Size = UDim2.new(1, -20, 0, 24)
+beltBtn2.AnchorPoint = Vector2.new(0.5, 0)
+beltBtn2.Position = UDim2.new(0.5, 0, 0, 244)
+beltBtn2.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
+beltBtn2.Text = "Get Belt 2"
+beltBtn2.TextColor3 = Color3.fromRGB(255, 255, 255)
+beltBtn2.TextSize = 12
+beltBtn2.Font = Enum.Font.GothamBold
+beltBtn2.Active = true
+beltBtn2.AutoButtonColor = false
+beltBtn2.Parent = mainFrame
 
-local coolerBtn = Instance.new("TextButton")
-coolerBtn.Name = "CoolerButton"
-coolerBtn.Size = UDim2.new(0, 85, 0, 32)
-coolerBtn.Position = UDim2.new(1, -85, 0, 52)
-coolerBtn.BackgroundColor3 = Color3.fromRGB(70, 70, 80)
-coolerBtn.Text = "Get Belt"
-coolerBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-coolerBtn.TextSize = 12
-coolerBtn.Font = Enum.Font.GothamBold
-coolerBtn.Active = true
-coolerBtn.AutoButtonColor = false
-coolerBtn.Parent = miscPage
-local coolerCorner = Instance.new("UICorner") coolerCorner.CornerRadius = UDim.new(0, 6) coolerCorner.Parent = coolerBtn
+local belt2Corner = Instance.new("UICorner")
+belt2Corner.CornerRadius = UDim.new(0, 6)
+belt2Corner.Parent = beltBtn2
 
-coolerBtn.MouseButton1Click:Connect(function()
+beltBtn2.MouseButton1Click:Connect(function()
     pcall(function()
         local belt = ReplicatedStorage.Framework.Assets.Belts.BMF:Clone()
         belt.Parent = lp.Backpack
@@ -475,27 +399,8 @@ coolerBtn.MouseButton1Click:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- DYNAMIC HOVER EFFECTS
+-- DYNAMIC HOVER EFFECTS & ANIMATIONS
 --------------------------------------------------------------------------------
-local function applyTabHover(btn, tabName)
-    btn.MouseEnter:Connect(function()
-        TweenService:Create(btn, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            BackgroundColor3 = Color3.fromRGB(72, 172, 239),
-            Position = btn.Position - UDim2.new(0, 0, 0, 1)
-        }):Play()
-    end)
-    btn.MouseLeave:Connect(function()
-        local targetColor = (currentActiveTab == tabName) and Color3.fromRGB(52, 152, 219) or Color3.fromRGB(40, 40, 50)
-        TweenService:Create(btn, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            BackgroundColor3 = targetColor,
-            Position = btn.Position + UDim2.new(0, 0, 0, 1)
-        }):Play()
-    end)
-end
-
-applyTabHover(mainTabBtn, "Main")
-applyTabHover(miscTabBtn, "Misc")
-
 local function applyToggleHover(btn, getStateFunc, greenColor, redColor, greenHover, redHover)
     btn.MouseEnter:Connect(function()
         local isEnabled = getStateFunc()
@@ -548,8 +453,8 @@ local function applyHoverEffect(btn, originalColor, hoverColor)
     end)
 end
 
-applyHoverEffect(champBtn, Color3.fromRGB(70, 70, 80), Color3.fromRGB(90, 90, 100))
-applyHoverEffect(coolerBtn, Color3.fromRGB(70, 70, 80), Color3.fromRGB(90, 90, 100))
+applyHoverEffect(beltBtn1, Color3.fromRGB(70, 70, 80), Color3.fromRGB(90, 90, 100))
+applyHoverEffect(beltBtn2, Color3.fromRGB(70, 70, 80), Color3.fromRGB(90, 90, 100))
 
 --------------------------------------------------------------------------------
 -- NOTIFICATION
@@ -564,7 +469,9 @@ notifFrame.BorderSizePixel = 0
 notifFrame.Visible = false
 notifFrame.Parent = screenGui
 
-local notifCorner = Instance.new("UICorner") notifCorner.CornerRadius = UDim.new(0, 8) notifCorner.Parent = notifFrame
+local notifCorner = Instance.new("UICorner")
+notifCorner.CornerRadius = UDim.new(0, 8)
+notifCorner.Parent = notifFrame
 
 local notifHeader = Instance.new("TextLabel")
 notifHeader.Size = UDim2.new(1, -20, 0, 30)
@@ -594,7 +501,9 @@ local activeNotifThread = nil
 local tweenInfoNotif = TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 local function showNotification()
-    if activeNotifThread then task.cancel(activeNotifThread) end
+    if activeNotifThread then
+        task.cancel(activeNotifThread)
+    end
     notifFrame.Visible = true
     TweenService:Create(notifFrame, tweenInfoNotif, {BackgroundTransparency = 0}):Play()
     TweenService:Create(notifHeader, tweenInfoNotif, {TextTransparency = 0}):Play()
@@ -612,20 +521,24 @@ local function showNotification()
 end
 
 --------------------------------------------------------------------------------
--- STARTUP ANIMATION
+-- STARTUP ANIMATION (LOADING -> MAIN MORPH)
 --------------------------------------------------------------------------------
 task.spawn(function()
     task.wait(3.5)
+    
     local fadeOutInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
     TweenService:Create(loadingTitle, fadeOutInfo, {TextTransparency = 1}):Play()
     TweenService:Create(loadingGear, fadeOutInfo, {ImageTransparency = 1}):Play()
+    
     task.wait(0.3)
     gearTween:Cancel()
+    
     local morphTween = TweenService:Create(loadingFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Size = UDim2.new(0, 255, 0, 275)
+        Size = UDim2.new(0, 255, 0, 280)
     })
     morphTween:Play()
     morphTween.Completed:Wait()
+    
     loadingFrame.Visible = false
     mainFrame.Visible = true
     TweenService:Create(uiScale, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Scale = 1}):Play()
@@ -659,11 +572,13 @@ conns[#conns+1] = UIS.InputBegan:Connect(function(input, gameProcessed)
 end)
 
 local dragging, dragInput, dragStart, startPos
+
 local function startDrag(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
         dragStart = input.Position
         startPos = mainFrame.Position
+        
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then dragging = false end
         end)
@@ -673,16 +588,22 @@ end
 titleBar.InputBegan:Connect(startDrag)
 loadingFrame.InputBegan:Connect(startDrag)
 
-UIS.InputChanged:Connect(function(input)
-    if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+local function updateDrag(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
         dragInput = input
     end
-end)
+end
+
+titleBar.InputChanged:Connect(updateDrag)
+loadingFrame.InputChanged:Connect(updateDrag)
 
 UIS.InputChanged:Connect(function(input)
     if input == dragInput and dragging then
         local delta = input.Position - dragStart
-        local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        local newPos = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
         mainFrame.Position = newPos
         loadingFrame.Position = newPos
     end
@@ -690,25 +611,42 @@ end)
 
 local activeRatingTween = nil
 local function updateRatingText(val)
-    if activeRatingTween then activeRatingTween:Cancel() end
+    if activeRatingTween then
+        activeRatingTween:Cancel()
+    end
+
     local targetColor
-    if val <= 0.151 then ratingLabel.Text = "BLATANT"
-    elseif val <= 0.35 then ratingLabel.Text = "LEGIT"
-    else ratingLabel.Text = "SLOW" end
+    if val <= 0.151 then
+        ratingLabel.Text = "BLATANT"
+    elseif val <= 0.35 then
+        ratingLabel.Text = "LEGIT"
+    else
+        ratingLabel.Text = "SLOW"
+    end
 
     local colorTweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
     if not autoBlockEnabled then
         targetColor = Color3.fromRGB(120, 120, 130)
         TweenService:Create(ratingLabel, colorTweenInfo, {TextColor3 = targetColor}):Play()
         TweenService:Create(ratingStroke, colorTweenInfo, {Color = targetColor}):Play()
+        
         local gradient = ratingStroke:FindFirstChildOfClass("UIGradient")
-        if gradient then TweenService:Create(gradient, colorTweenInfo, {Transparency = NumberSequence.new(1)}):Play() end
+        if gradient then 
+            TweenService:Create(gradient, colorTweenInfo, {Transparency = NumberSequence.new(1)}):Play()
+        end
     else
-        if val <= 0.151 then targetColor = Color3.fromRGB(219, 14, 51)
-        elseif val <= 0.35 then targetColor = Color3.fromRGB(46, 204, 113)
-        else targetColor = Color3.fromRGB(241, 196, 15) end
+        if val <= 0.151 then
+            targetColor = Color3.fromRGB(219, 14, 51)
+        elseif val <= 0.35 then
+            targetColor = Color3.fromRGB(46, 204, 113)
+        else
+            targetColor = Color3.fromRGB(241, 196, 15)
+        end
+        
         TweenService:Create(ratingLabel, colorTweenInfo, {TextColor3 = targetColor}):Play()
         TweenService:Create(ratingStroke, colorTweenInfo, {Color = targetColor}):Play()
+        
         local gradient = ratingStroke:FindFirstChildOfClass("UIGradient")
         if gradient then gradient:Destroy() end
         local _, sweepTween = applySweepingGlow(ratingStroke, targetColor, 3.5, 0.16, 0.5)
@@ -721,11 +659,15 @@ toggleBtn.MouseButton1Click:Connect(function()
     if autoBlockEnabled then
         toggleBtn.Text = "ENABLED"
         toggleBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
-        TweenService:Create(sliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(52, 152, 219)}):Play()
+        TweenService:Create(sliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            BackgroundColor3 = Color3.fromRGB(52, 152, 219)
+        }):Play()
     else
         toggleBtn.Text = "DISABLED"
         toggleBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-        TweenService:Create(sliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(120, 120, 130)}):Play()
+        TweenService:Create(sliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            BackgroundColor3 = Color3.fromRGB(120, 120, 130)
+        }):Play()
     end
     updateRatingText(responseDelay)
 end)
@@ -735,62 +677,111 @@ subToggleBtn.MouseButton1Click:Connect(function()
     if autoSubmitEnabled then
         subToggleBtn.Text = "ON"
         subToggleBtn.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
-        TweenService:Create(subSliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(255, 140, 90)}):Play()
+        TweenService:Create(subSliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            BackgroundColor3 = Color3.fromRGB(255, 140, 90)
+        }):Play()
     else
         subToggleBtn.Text = "OFF"
         subToggleBtn.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
-        TweenService:Create(subSliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(120, 120, 130)}):Play()
+        TweenService:Create(subSliderFill, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            BackgroundColor3 = Color3.fromRGB(120, 120, 130)
+        }):Play()
     end
 end)
 
 --------------------------------------------------------------------------------
--- SLIDERS LOGIC
+-- SLIDERS LOGIC 
 --------------------------------------------------------------------------------
-local sliderActive, subSliderActive = false, false
+local sliderActive = false
+local subSliderActive = false
 local sliderTweenInfo = TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 local function updateSlider(input)
-    local trackPos, trackWidth = sliderTrack.AbsolutePosition.X, sliderTrack.AbsoluteSize.X
-    local relativeX = math.clamp((input.Position.X - trackPos) / trackWidth, 0, 1)
-    responseDelay = math.floor(((relativeX * 0.5) / 0.05) + 0.5) * 0.05
-    responseDelay = math.clamp(responseDelay, 0, 0.5)
+    local trackPos = sliderTrack.AbsolutePosition.X
+    local trackWidth = sliderTrack.AbsoluteSize.X
+    local mouseX = input.Position.X
+    local relativeX = math.clamp((mouseX - trackPos) / trackWidth, 0, 1)
+    
+    local rawVal = relativeX * 0.5
+    local steppedVal = math.floor((rawVal / 0.05) + 0.5) * 0.05
+    steppedVal = math.clamp(steppedVal, 0, 0.5)
+    
+    responseDelay = steppedVal
     local alpha = responseDelay / 0.5
+    
     TweenService:Create(sliderFill, sliderTweenInfo, {Size = UDim2.new(alpha, 0, 1, 0)}):Play()
     TweenService:Create(sliderKnob, sliderTweenInfo, {Position = UDim2.new(alpha, 0, 0.5, 0)}):Play()
+    
     delayLabel.Text = string.format("Delay: %.2fs", responseDelay)
     updateRatingText(responseDelay)
 end
 
 local function updateSubSlider(input)
-    local trackPos, trackWidth = subSliderTrack.AbsolutePosition.X, subSliderTrack.AbsoluteSize.X
-    local relativeX = math.clamp((input.Position.X - trackPos) / trackWidth, 0, 1)
-    predictionFactor = math.floor(((relativeX * 0.5) / 0.05) + 0.5) * 0.05
-    predictionFactor = math.clamp(predictionFactor, 0, 0.5)
+    local trackPos = subSliderTrack.AbsolutePosition.X
+    local trackWidth = subSliderTrack.AbsoluteSize.X
+    local mouseX = input.Position.X
+    local relativeX = math.clamp((mouseX - trackPos) / trackWidth, 0, 1)
+    
+    local rawVal = relativeX * 0.5 
+    local steppedVal = math.floor((rawVal / 0.05) + 0.5) * 0.05
+    steppedVal = math.clamp(steppedVal, 0, 0.5)
+    
+    predictionFactor = steppedVal
     local alpha = predictionFactor / 0.5
+    
     TweenService:Create(subSliderFill, sliderTweenInfo, {Size = UDim2.new(alpha, 0, 1, 0)}):Play()
     TweenService:Create(subSliderKnob, sliderTweenInfo, {Position = UDim2.new(alpha, 0, 0.5, 0)}):Play()
-    subLabel.Text = string.format("Prediction: %.2f", predictionFactor)
+    
+    if predictionFactor >= 0.34 then
+        subLabel.Text = string.format("Prediction: %.2f (⚠️ may overpredict)", predictionFactor)
+    elseif predictionFactor >= 0.29 then
+        subLabel.Text = string.format("Prediction: %.2f (+++ prediction)", predictionFactor)
+    elseif predictionFactor >= 0.24 then
+        subLabel.Text = string.format("Prediction: %.2f (++ prediction)", predictionFactor)
+    elseif predictionFactor >= 0.19 then
+        subLabel.Text = string.format("Prediction: %.2f (+ prediction)", predictionFactor)
+    elseif predictionFactor >= 0.14 then
+        subLabel.Text = string.format("Prediction: %.2f (Default)", predictionFactor)
+    else
+        subLabel.Text = string.format("Prediction: %.2f (follows, no prediction)", predictionFactor)
+    end
 end
 
 updateRatingText(responseDelay)
 
 sliderTrack.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then sliderActive = true updateSlider(input) end
-end)
-subSliderTrack.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then subSliderActive = true updateSubSlider(input) end
-end)
-UIS.InputChanged:Connect(function(input)
-    if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-        if sliderActive then updateSlider(input) elseif subSliderActive then updateSubSlider(input) end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        sliderActive = true
+        updateSlider(input)
     end
 end)
+
+subSliderTrack.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        subSliderActive = true
+        updateSubSlider(input)
+    end
+end)
+
+UIS.InputChanged:Connect(function(input)
+    if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        if sliderActive then
+            updateSlider(input)
+        elseif subSliderActive then
+            updateSubSlider(input)
+        end
+    end
+end)
+
 UIS.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then sliderActive = false subSliderActive = false end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        sliderActive = false
+        subSliderActive = false
+    end
 end)
 
 --------------------------------------------------------------------------------
--- AUTO CLEANUP & CORE LOGIC
+-- AUTO CLEANUP
 --------------------------------------------------------------------------------
 G.__abCleanup = function()
     for _, c in ipairs(conns) do pcall(function() c:Disconnect() end) end
@@ -798,9 +789,15 @@ G.__abCleanup = function()
     print("[stopped previous instance]")
 end
 
+--------------------------------------------------------------------------------
+-- REMOTE DETECTION (TAKEDOWN BLOCKER)
+--------------------------------------------------------------------------------
 local function wf(parent, name)
     local obj = parent:FindFirstChild(name)
-    while not obj do obj = parent:WaitForChild(name, 5) end
+    while not obj do
+        print("[WAIT] " .. parent.Name .. "." .. name .. " (enter a fight)")
+        obj = parent:WaitForChild(name, 5)
+    end
     return obj
 end
 
@@ -812,46 +809,75 @@ local val = wf(wf(frame, "Progress"), "Value")
 
 local DIRS = {"Up","Down","Left","Right"}
 local holds, arrows = {}, {}
-for _, d in ipairs(DIRS) do holds[d] = wf(frame, "Hold"..d) arrows[d] = wf(frame, "Arrow"..d) end
+for _, d in ipairs(DIRS) do
+    holds[d]  = wf(frame, "Hold"..d)
+    arrows[d] = wf(frame, "Arrow"..d)
+end
 
 G.__abState = G.__abState or {ourActive = false, ourTime = 0, sending = false}
 local S = G.__abState
 S.RE = RE
 
-local canHook = type(hookmetamethod) == "function" and type(getnamecallmethod) == "function" and type(getrawmetatable) == "function"
+local canHook = type(hookmetamethod) == "function"
+    and type(getnamecallmethod) == "function"
+    and type(getrawmetatable) == "function"
+
 if canHook and not G.__abHooked then
-    pcall(function()
+    local ok, err = pcall(function()
         local old = rawget(getrawmetatable(game), "__namecall")
+        if type(old) ~= "function" then error("no original __namecall") end
         local function track(self, ...)
             if getnamecallmethod() == "FireServer" and self == S.RE and not S.sending then
                 local a = ...
                 if type(a) == "table" then
-                    if a.Type == "Transition" then S.ourActive = true S.ourTime = tick()
-                    elseif a.Type == "StopTransitioning" then S.ourActive = false end
+                    if a.Type == "Transition" then
+                        S.ourActive = true
+                        S.ourTime = tick()
+                    elseif a.Type == "StopTransitioning" then
+                        S.ourActive = false
+                    end
                 end
             end
         end
-        local wrap = function(self, ...) pcall(track, self, ...) return old(self, ...) end
+        local wrap = function(self, ...)
+            pcall(track, self, ...)
+            return old(self, ...)
+        end
         if type(newcclosure) == "function" then wrap = newcclosure(wrap) end
-        hookmetamethod(game, "__namecall", wrap)
+        local ret = hookmetamethod(game, "__namecall", wrap)
+        if type(ret) == "function" then old = ret end
         G.__abHooked = true
     end)
+    if not ok then warn("[WARN] hook failed: " .. tostring(err)) end
 end
 
-local KEYS = {Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right}
+--------------------------------------------------------------------------------
+-- AUTO BLOCK LOGIC (TAKEDOWN)
+--------------------------------------------------------------------------------
+local KEYS = {Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D,
+              Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right}
+
 local function anyKeyDown()
-    for _, k in ipairs(KEYS) do if UIS:IsKeyDown(k) then return true end end
+    for _, k in ipairs(KEYS) do
+        if UIS:IsKeyDown(k) then return true end
+    end
     return false
 end
 
-local blockedDir, lastFire, roundStart, noDirWarned, prevVal = nil, 0, 0, false, 0
+local blockedDir = nil
+local lastFire = 0
+local roundStart = 0
+local noDirWarned = false
+local prevVal = 0
 local arrowT = {Up = 0, Down = 0, Left = 0, Right = 0}
 
 local function gradMax(inst)
     local g = inst:FindFirstChildOfClass("UIGradient")
     if not g then return 0 end
     local m = 0
-    for _, kp in ipairs(g.Transparency.Keypoints) do if kp.Value > m then m = kp.Value end end
+    for _, kp in ipairs(g.Transparency.Keypoints) do
+        if kp.Value > m then m = kp.Value end
+    end
     return m
 end
 
@@ -869,7 +895,9 @@ local function currentDir()
     local undimmed, desc = dimState()
     if #undimmed == 1 then return undimmed[1], "dim", desc end
     local hits = {}
-    for _, d in ipairs(DIRS) do if arrowT[d] >= tick() - 0.1 then hits[#hits+1] = d end end
+    for _, d in ipairs(DIRS) do
+        if arrowT[d] >= tick() - 0.1 then hits[#hits+1] = d end
+    end
     if #hits == 1 then return hits[1], "arrow", desc end
     return nil, nil, desc
 end
@@ -892,17 +920,26 @@ local function evaluate(src)
     if not autoBlockEnabled then return end
     if val.Value <= 0 or isOurs() then return end
     if tick() - lastFire < ECHO_GUARD then return end
-    local dir = currentDir()
+    local dir, how, desc = currentDir()
     if not dir or dir == blockedDir then return end
     blockedDir = dir
+    
     task.delay(responseDelay, function()
-        if autoBlockEnabled and val.Value > 0 then fire(dir) end
+        if autoBlockEnabled and val.Value > 0 then
+            fire(dir)
+        end
     end)
 end
 
+--------------------------------------------------------------------------------
+-- SUBMISSION AUTO-TRACKER LOGIC
+--------------------------------------------------------------------------------
 local updateSubRemote = ReplicatedStorage:WaitForChild("Framework"):WaitForChild("RemoteEvents"):FindFirstChild("UpdateSubmissionPosition")
 if not updateSubRemote then
-    pcall(function() updateSubRemote = require(ReplicatedStorage:WaitForChild("Framework")):GetRemoteEvent("UpdateSubmissionPosition") end)
+    pcall(function()
+        local Framework = require(ReplicatedStorage:WaitForChild("Framework"))
+        updateSubRemote = Framework:GetRemoteEvent("UpdateSubmissionPosition")
+    end)
 end
 
 local currentSubDirection = "idle"
@@ -922,17 +959,31 @@ local function updateSubMovement(barInstance, direction)
     end
 end
 
+--------------------------------------------------------------------------------
+-- CONNECTIONS
+--------------------------------------------------------------------------------
 conns[#conns+1] = val:GetPropertyChangedSignal("Value"):Connect(function()
     local v = val.Value
-    if v > 0 and prevVal == 0 then roundStart = tick() blockedDir = nil noDirWarned = false evaluate("val")
-    elseif v == 0 and prevVal > 0 then blockedDir = nil S.ourActive = false end
+    if v > 0 and prevVal == 0 then
+        roundStart = tick()
+        blockedDir = nil
+        noDirWarned = false
+        evaluate("val")
+    elseif v == 0 and prevVal > 0 then
+        blockedDir = nil
+        S.ourActive = false
+    end
     prevVal = v
 end)
 
 for _, d in ipairs(DIRS) do
     for _, inst in ipairs({holds[d], arrows[d]}) do
         local g = inst:FindFirstChildOfClass("UIGradient")
-        if g then conns[#conns+1] = g:GetPropertyChangedSignal("Transparency"):Connect(function() evaluate("dim") end) end
+        if g then
+            conns[#conns+1] = g:GetPropertyChangedSignal("Transparency"):Connect(function()
+                evaluate("dim")
+            end)
+        end
     end
     conns[#conns+1] = arrows[d].Changed:Connect(function()
         if tick() - lastFire > 0.3 then arrowT[d] = tick() end
@@ -942,38 +993,61 @@ end
 
 conns[#conns+1] = RS.Heartbeat:Connect(function()
     evaluate("hb")
-    if val.Value > 0 and not blockedDir and not noDirWarned and not isOurs() and tick() - roundStart > 0.25 then noDirWarned = true end
+    if val.Value > 0 and not blockedDir and not noDirWarned and not isOurs() and tick() - roundStart > 0.25 then
+        noDirWarned = true
+    end
+
     if not autoSubmitEnabled then return end
     local screenGuiCheck = lp:FindFirstChild("PlayerGui") and lp.PlayerGui:FindFirstChild("ScreenGui")
+    
     if not screenGuiCheck or not screenGuiCheck:FindFirstChild("Line") then
-        if wasInSubGUI then currentSubDirection = "idle" wasInSubGUI = false end
+        if wasInSubGUI then
+            currentSubDirection = "idle"
+            wasInSubGUI = false
+        end
         lastEnemyCenter = nil
         return
     end
-    if not wasInSubGUI then wasInSubGUI = true currentSubDirection = "idle" lastTime = tick() end
+
+    if not wasInSubGUI then
+        wasInSubGUI = true
+        currentSubDirection = "idle"
+        lastTime = tick()
+    end
+
     local lineContainer = screenGuiCheck.Line
     local myColor = screenGuiCheck:GetAttribute("Color")
     if not myColor then return end
+
     local myBar = lineContainer:FindFirstChild(myColor)
     local enemyBar = myColor == "Red" and lineContainer:FindFirstChild("Blue") or lineContainer:FindFirstChild("Red")
+
     if myBar and enemyBar then
         local currentTime = tick()
         local dt = currentTime - lastTime
         lastTime = currentTime
+
         local myCenter = myBar.AbsolutePosition.X + (myBar.AbsoluteSize.X / 2)
         local enemyCenter = enemyBar.AbsolutePosition.X + (enemyBar.AbsoluteSize.X / 2)
+
         local predictedEnemyCenter = enemyCenter
         if lastEnemyCenter and dt > 0 then
             local velocity = (enemyCenter - lastEnemyCenter) / dt
             predictedEnemyCenter = enemyCenter + (velocity * predictionFactor)
         end
         lastEnemyCenter = enemyCenter
+
         local containerMin = lineContainer.AbsolutePosition.X + (myBar.AbsoluteSize.X / 2)
         local containerMax = (lineContainer.AbsolutePosition.X + lineContainer.AbsoluteSize.X) - (myBar.AbsoluteSize.X / 2)
         predictedEnemyCenter = math.clamp(predictedEnemyCenter, containerMin, containerMax)
-        if myCenter < (predictedEnemyCenter - subTolerance) then updateSubMovement(myBar, "right")
-        elseif myCenter > (predictedEnemyCenter + subTolerance) then updateSubMovement(myBar, "left")
-        else updateSubMovement(myBar, "idle") end
+
+        if myCenter < (predictedEnemyCenter - subTolerance) then
+            updateSubMovement(myBar, "right")
+        elseif myCenter > (predictedEnemyCenter + subTolerance) then
+            updateSubMovement(myBar, "left")
+        else
+            updateSubMovement(myBar, "idle")
+        end
     else
         currentSubDirection = "idle"
         lastEnemyCenter = nil
